@@ -1,6 +1,5 @@
-package com.cvbotunion.cvbotserver.model;
+package com.cvbotunion.cvbotserver.documents;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,10 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 import java.util.List;
 
-@Document(collation = "tweet")
-public class Tweet {
-    @Id
-    private String id;
+@Document(collation = "tweets")
+public class TweetDocument extends AbstractDocument{
+
     private String user;
     @Indexed(direction = IndexDirection.ASCENDING)
     private Date tweetDate;
