@@ -2,7 +2,6 @@ package com.cvbotunion.cvbotserver.documents;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class UserDocument {
     @Indexed(unique = true)
     private String username;
     private String password;
-    private List<String> associatedRTGroupID;
+    private final List<String> associatedRTGroupID;
 
     public UserDocument(String username, String password) {
         this.username = username;

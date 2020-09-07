@@ -2,27 +2,30 @@ package com.cvbotunion.cvbotserver.controllers;
 
 import com.cvbotunion.cvbotserver.documents.UserDocument;
 import com.cvbotunion.cvbotserver.repositories.UserRepository;
-import org.apache.catalina.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cvbotunion.cvbotserver.utils.ResponseWrapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.io.Serializable;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
+    @Resource
     private UserRepository userRepository;
 
     @GetMapping("/")
-    private UserDocument getCurrentUserDetail(Authentication authentication){
+    private ResponseEntity<ResponseWrapper> getCurrentUserDetail(Authentication authentication){
         UserDocument userDocument = this.userRepository.findByUsername(authentication.getName());
         if(userDocument != null){
             userDocument.setPassword(null);
-            return userDocument;
+            return ResponseEntity.ok().body(new ResponseWrapper(false, "User Created", (Serializable) userDocument));
         }else{
-            return null;
+            return ResponseEntity.ok().body(new ResponseWrapper(true, "User Not Found", 10404));
         }
     }
 

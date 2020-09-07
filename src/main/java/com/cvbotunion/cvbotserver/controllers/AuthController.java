@@ -6,8 +6,8 @@ import com.cvbotunion.cvbotserver.controllers.responses.AuthLoginResponse;
 import com.cvbotunion.cvbotserver.documents.UserDocument;
 import com.cvbotunion.cvbotserver.repositories.UserRepository;
 import com.cvbotunion.cvbotserver.utils.JWTTokenUtil;
+import com.cvbotunion.cvbotserver.utils.ResponseWrapper;
 import com.mongodb.MongoWriteException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,15 +16,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
+    @Resource
     private AuthenticationManager authenticationManager;
 
-    @Autowired
+    @Resource
     private JWTTokenUtil jwtTokenUtil;
 
     private final UserRepository userRepository;
@@ -47,13 +49,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> createNewUser(@RequestBody AuthRegisterRequest authRegisterRequest){
+    public ResponseEntity<ResponseWrapper> createNewUser(@RequestBody AuthRegisterRequest authRegisterRequest){
         String hashedPassword = BCrypt.hashpw(authRegisterRequest.getPassword(), BCrypt.gensalt());
         try{
-            this.userRepository.save(new UserDocument(authRegisterRequest.getUsername(), hashedPassword));
-            return ResponseEntity.ok().build();
+            UserDocument document = new UserDocument(authRegisterRequest.getUsername(), hashedPassword);
+            this.userRepository.save(document);
+            return ResponseEntity.ok().body(new ResponseWrapper(false,"Saved", String.format("{\"id\": \"%s\"}",document.getUsername())));
         }catch (MongoWriteException e){
-            return ResponseEntity.badRequest().body(e.getCode());
+            return ResponseEntity.badRequest().body(new ResponseWrapper(true,"Duplicate Key", e));
         }
 
     }

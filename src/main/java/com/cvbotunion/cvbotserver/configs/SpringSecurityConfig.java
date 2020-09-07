@@ -3,7 +3,6 @@ package com.cvbotunion.cvbotserver.configs;
 import com.cvbotunion.cvbotserver.components.AuthEntryPoint;
 import com.cvbotunion.cvbotserver.components.AuthRequestFilter;
 import com.cvbotunion.cvbotserver.services.AuthUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,21 +16,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.annotation.Resource;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    @Resource
     private AuthUserService authUserService;
 
-    @Autowired
+    @Resource
     private AuthEntryPoint authEntryPoint;
 
-    @Autowired
+    @Resource
     private AuthRequestFilter authRequestFilter;
 
-    @Autowired
+    @Resource
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         // configure AuthenticationManager so that it knows from where to load
         // user for matching credentials

@@ -12,10 +12,11 @@ public class TweetDocument extends AbstractDocument{
 
     private String user;
     @Indexed(direction = IndexDirection.ASCENDING)
-    private Date tweetDate;
+    private Date created_date;
     private String original_content;
 
     private boolean isRetweet;
+    private boolean isReply;
     private String retweetId;
 
     private List<String> medias;
