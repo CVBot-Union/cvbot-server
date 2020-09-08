@@ -30,7 +30,7 @@ public class RTGroupController {
 
     @GetMapping("/detail")
     private ResponseEntity<ResponseWrapper> getGroupByName(@RequestParam(value = "group_name") String groupName) {
-        return ResponseEntity.ok().body(new ResponseWrapper(false, "Fetched", (Serializable) this.rtGroupRepository.findByGroupName(groupName)));
+        return ResponseEntity.ok().body(new ResponseWrapper(false, "Fetched", this.rtGroupRepository.findByGroupName(groupName)));
     }
 
     @PostMapping("/new")
@@ -53,7 +53,7 @@ public class RTGroupController {
             RTGroupDocument document = pendingDocument.get();
             document.removeGroupMember(rtGroupUserModificationRequest.getUserID());
             this.rtGroupRepository.save(document);
-            return ResponseEntity.ok().body(new ResponseWrapper(false,"Removed", (Serializable) document));
+            return ResponseEntity.ok().body(new ResponseWrapper(false,"Removed", document));
         } catch (ElementNotFoundException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(true, "Element Not Found", e));
         }
@@ -69,7 +69,7 @@ public class RTGroupController {
             RTGroupDocument document = pendingDocument.get();
             document.addNewGroupMember(rtGroupUserModificationRequest.getUserID());
             this.rtGroupRepository.save(document);
-            return ResponseEntity.ok().body(new ResponseWrapper(false, "Joined", (Serializable) document));
+            return ResponseEntity.ok().body(new ResponseWrapper(false, "Joined", document));
         } catch (ElementNotUniqueException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(true, "Element Not Unique", e));
         }
@@ -88,7 +88,7 @@ public class RTGroupController {
             }
             document.removeLeader(rtGroupUserModificationRequest.getUserID());
             this.rtGroupRepository.save(document);
-            return ResponseEntity.ok().body(new ResponseWrapper(false,"Removed", (Serializable) document));
+            return ResponseEntity.ok().body(new ResponseWrapper(false,"Removed", document));
         } catch (ElementNotFoundException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(true, "Element Not Found", e));
         }
@@ -104,7 +104,7 @@ public class RTGroupController {
             RTGroupDocument document = pendingDocument.get();
             document.addNewLeader(rtGroupUserModificationRequest.getUserID());
             this.rtGroupRepository.save(document);
-            return ResponseEntity.ok().body(new ResponseWrapper(false, "Joined", (Serializable) document));
+            return ResponseEntity.ok().body(new ResponseWrapper(false, "Joined", document));
         } catch (ElementNotUniqueException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(true, "Element Not Unique", e));
         }

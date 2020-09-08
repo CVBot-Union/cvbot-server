@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: CVBot Union APP Server(${ENV} Config)
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: cvbot-app
+  redis:
+    host: localhost
+
+keys:
+  jwt: UUID
+  twitter:
+    ckey: null
+    cs: null
+    at: null
+    ats: null
+  oss:
+    endpoint: https://nowhere.aliyun.com/
+    accessID: null
+    accessKey: null
+  mipush:
+    appID: null
+    appKey: null
+    appSecret: null

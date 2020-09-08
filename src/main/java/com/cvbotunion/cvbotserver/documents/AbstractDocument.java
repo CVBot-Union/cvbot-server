@@ -2,7 +2,9 @@ package com.cvbotunion.cvbotserver.documents;
 
 import org.springframework.data.annotation.Id;
 
-public abstract class AbstractDocument {
+import java.io.Serializable;
+
+public abstract class AbstractDocument implements Serializable {
 
     @Id
     private String id;

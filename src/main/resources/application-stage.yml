@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: CVBot Union APP Server(Staging Config)
+  data:
+    mongodb:
+      uri: mongodb+srv://dbUser:odwgZtt2QOrUAx8V@cluster0.n1ijh.azure.mongodb.net/cvbot?retryWrites=true&w=majority
+      database: cvbot-app
+  redis:
+    host: localhost
+
+keys:
+  jwt: f725ebdc-3ec3-48a4-8db7-5c593fc54d24
+  twitter:
+    ckey: null
+    cs: null
+    at: null
+    ats: null
+  oss:
+    endpoint: https://nowhere.aliyun.com/
+    accessID: null
+    accessKey: null
+  mipush:
+    appID: null
+    appKey: null
+    appSecret: null

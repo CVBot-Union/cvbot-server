@@ -1,8 +1,3 @@
 spring:
-  application:
-    name: CVBot Union APP Server
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: cvbot-app
+  profiles:
+    active: dev

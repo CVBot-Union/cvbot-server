@@ -29,7 +29,7 @@ public class TwitterUserController {
 
     @GetMapping("/detail")
     private ResponseEntity<ResponseWrapper> getTwitterUserDetail(@RequestParam(value = "username") String username) {
-        return ResponseEntity.ok().body(new ResponseWrapper(false, "Fetched", (Serializable) this.twitterUserRepository.findByUsername(username)));
+        return ResponseEntity.ok().body(new ResponseWrapper(false, "Fetched", this.twitterUserRepository.findByUsername(username)));
     }
 
     @PostMapping("/new")
@@ -48,7 +48,7 @@ public class TwitterUserController {
             TwitterUserDocument document = this.twitterUserRepository.findByUsername(twitterUserGroupModificationRequest.getUsername());
             document.removeFromGroup(twitterUserGroupModificationRequest.getGroupID());
             this.twitterUserRepository.save(document);
-            return ResponseEntity.ok().body(new ResponseWrapper(false,"Removed", (Serializable) document));
+            return ResponseEntity.ok().body(new ResponseWrapper(false,"Removed", document));
         } catch (ElementNotFoundException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(true, "Element Not Found", e));
         }
@@ -60,7 +60,7 @@ public class TwitterUserController {
             TwitterUserDocument document = this.twitterUserRepository.findByUsername(twitterUserGroupModificationRequest.getUsername());
             document.addToNewGroup(twitterUserGroupModificationRequest.getGroupID());
             this.twitterUserRepository.save(document);
-            return ResponseEntity.ok().body(new ResponseWrapper(false, "Joined", (Serializable) document));
+            return ResponseEntity.ok().body(new ResponseWrapper(false, "Joined", document));
         } catch (ElementNotUniqueException e) {
             return ResponseEntity.badRequest().body(new ResponseWrapper(true, "Element Not Unique", e));
         }
